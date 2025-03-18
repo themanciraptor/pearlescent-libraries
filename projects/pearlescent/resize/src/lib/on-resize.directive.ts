@@ -27,10 +27,31 @@ export class ResizeDirective {
   private readonly destroyRef = inject(DestroyRef);
   private readonly service = inject(OnResizeService);
 
-  public readonly resizeConfig = input<Config | null>(null);
+  /**
+   * Optional configuration for the resize directive.
+   *
+   * @default null
+   */
+  public readonly resizeConfig = input<Config | null>(null, {
+    alias: 'plsResizeConfig',
+  });
+
+  /**
+   * Emits the current size of the element every time the element is resized.
+   *
+   * @param $event The current size of the element.
+   */
   public readonly sizeChanged = output<CurrentSize>({
     alias: 'plsOnResize',
   });
+
+  /**
+   * The current size of the element.
+   *
+   * Defaults to an empty object with `inlineSize` and `blockSize` properties set to 0.
+   *
+   * @readonly
+   */
   public readonly currentSize = signal<CurrentSize>({
     inlineSize: 0,
     blockSize: 0,
