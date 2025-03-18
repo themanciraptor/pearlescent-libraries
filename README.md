@@ -1,4 +1,4 @@
-# 
+#
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.4.
 
@@ -13,6 +13,10 @@ Run `ng generate component component-name` to generate a new component. You can 
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+
+## Publishing
+
+After building your library with `ng build projectName`, go to the dist folder `cd dist/resize` and run `npm publish`.
 
 ## Running unit tests
 
