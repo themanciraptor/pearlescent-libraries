@@ -1,0 +1,43 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "@pearlescent/resize": {
+      "projectType": "library",
+      "root": "projects/pearlescent/resize",
+      "sourceRoot": "projects/pearlescent/resize/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/pearlescent/resize/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/pearlescent/resize/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/pearlescent/resize/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/pearlescent/resize/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "analytics": "5ba0f0c6-f7d6-4d8c-9614-7a88ef16c163"
+  }
+}
