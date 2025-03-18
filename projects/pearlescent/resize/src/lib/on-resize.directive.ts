@@ -24,13 +24,38 @@ export class ResizeService {
     () => this._config?.boxModel ?? 'content-box'
   );
 
-  private readonly resizeObserver = new ResizeObserver((entries) => {
-    for (const entry of entries) {
-      this.elements.get(entry.target)?.(entry);
-    }
-  });
+  private resizeObserver?: ResizeObserver;
 
-  constructor() {}
+  constructor() {
+    afterNextRender(() => {
+      this.resizeObserver = this._createResizeObserver();
+    });
+  }
+
+  public observe(
+    element: Element,
+    callback: ResizeObserverCallback,
+    destroyRef?: DestroyRef
+  ) {
+    this.elements.set(element, callback);
+    this.resizeObserver?.observe(element, { box: this.boxModel() });
+    if (destroyRef) {
+      destroyRef.onDestroy(() => {
+        this.elements.delete(element);
+        this.resizeObserver?.unobserve(element);
+      });
+    }
+  }
+
+  private _createResizeObserver(): ResizeObserver {
+    const r = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        this.elements.get(entry.target)?.([entry], r);
+      }
+    });
+
+    return r;
+  }
 }
 
 @Directive({
