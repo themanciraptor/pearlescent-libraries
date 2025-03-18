@@ -75,7 +75,7 @@ export class BaseResizeService {
 @Injectable({
   providedIn: 'root',
 })
-export class ResizeThresholdService extends BaseResizeService {}
+export class ResizeBreakpointsService extends BaseResizeService {}
 
 @Injectable({
   providedIn: 'root',

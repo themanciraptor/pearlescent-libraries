@@ -8,6 +8,7 @@ import {
   inject,
   input,
   output,
+  signal,
 } from '@angular/core';
 import { Config } from './on-resize.tokens';
 import { OnResizeService } from './on-resize.service';
@@ -18,8 +19,8 @@ export interface CurrentSize {
 }
 
 @Directive({
-  selector: '[plsOnResize], (plsOnResize)',
-  exportAs: 'resizeHost',
+  selector: '[plsResize], (plsOnResize)',
+  exportAs: 'plsResize',
 })
 export class ResizeDirective {
   private readonly el = inject(ElementRef);
@@ -30,16 +31,19 @@ export class ResizeDirective {
   public readonly sizeChanged = output<CurrentSize>({
     alias: 'plsOnResize',
   });
+  public readonly currentSize = signal<CurrentSize>({
+    inlineSize: 0,
+    blockSize: 0,
+  });
 
   private readonly boxModel = computed(() => this.resizeConfig()?.boxModel ?? this.service.boxModel());
 
   private readonly resizeCallback = (entry: ResizeObserverEntry) => {
     const boxModelKey = this.boxModel() ? 'contentBoxSize' : 'borderBoxSize';
     const { inlineSize, blockSize } = entry[boxModelKey][0];
-    this.sizeChanged.emit({
-      inlineSize,
-      blockSize,
-    });
+    const next = { inlineSize, blockSize };
+    this.sizeChanged.emit(next);
+    this.currentSize.set(next);
   };
 
   constructor() {

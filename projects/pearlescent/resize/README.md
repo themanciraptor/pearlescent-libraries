@@ -1,24 +1,76 @@
 # Resize
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.0.
+Resize provides multiple angular utility directives to monitor the size of an html element. Only supports box model.
 
-## Code scaffolding
+## OnResize
 
-Run `ng generate component component-name --project resize` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project resize`.
-> Note: Don't forget to add `--project resize` or else it will be added to the default project in your `angular.json` file. 
+A directive that simply spits out the current inline (width) and block (height) sizes of an Element.
 
-## Build
+### Usage - Use element size change in component implementation.
 
-Run `ng build resize` to build the project. The build artifacts will be stored in the `dist/` directory.
+In component.ts:
 
-## Publishing
+```ts
+handleSize(size: CurrentSize) {
+    // ... do something
+}
+```
 
-After building your library with `ng build resize`, go to the dist folder `cd dist/resize` and run `npm publish`.
+In template:
 
-## Running unit tests
+```html
+<div (plsOnResize)="handleSize($event)"></div>
+```
 
-Run `ng test resize` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Usage - Confined to template
 
-## Further help
+```html
+<div plsResize #resize="plsResize"></div>
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+@let inlineSize = resize.currentSize().inlineSize;
+<!-- ... Do something with inlineSize -->
+```
+
+## ResizeBreakpointsDirective
+
+A directive that matches your element width to a breakpoint. Essentially a directive implementation of the
+[`matchContainer()`](https://github.com/w3c/csswg-drafts/issues/6205) function which will eventually come to CSS. The
+current implementation does not depend on the `matchContainer` polyfill.
+
+### Usage - Use element size change in component implementation.
+
+In component.ts:
+
+```ts
+handleBreakpointChange(breakpoints: CurrentBreakpoints) {
+    // ... do something
+}
+```
+
+In template:
+
+```html
+<div
+  plsResizeBreakpoints="{ inlineBreakpoints: [200, 400, 1600] }"
+  (inlineBreakpointChanged)="handleBreakpointChange($event)"
+>
+  ...
+</div>
+
+<!-- If you inject a global config with default thresholds, you can use the event listener directly -->
+<div (plsOnResizeBreakpoints)="handleBreakpointChange($event)">...</div>
+```
+
+### Usage - Confined to template
+
+```html
+<div
+  plsResizeBreakpoints="{
+    inlineBreakpoints: [200, 400, 1600],
+  }"
+  #breakpoint="plsResizeBreakpoints"
+></div>
+
+@let inlineBreakpoint = breakpoint.inlineBreakpoint();
+<!-- ... Do something with inlineSize -->
+```

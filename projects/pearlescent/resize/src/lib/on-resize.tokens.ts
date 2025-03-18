@@ -13,8 +13,8 @@ type HasDuplicate<TUPLE extends any[]> = TUPLE extends [infer L, ...infer R]
   : false;
 
 interface _Config<T extends number[]> {
-  inlineThresholds?: HasDuplicate<T> extends false ? [...T] : never;
-  blockThresholds?: HasDuplicate<T> extends false ? [...T] : never;
+  inlineBreakpoints?: HasDuplicate<T> extends false ? [...T] : never;
+  blockBreakpoints?: HasDuplicate<T> extends false ? [...T] : never;
   boxModel?: 'border-box' | 'content-box';
 }
 
@@ -31,12 +31,8 @@ export function provideDefaultResizeConfig(config: Config): Provider {
   return {
     provide: RESIZE_CONFIG,
     useValue: {
-      inlineThresholds: [...new Set(config.inlineThresholds ?? [])].sort(
-        (a, b) => a - b
-      ),
-      blockThresholds: [...new Set(config.blockThresholds ?? [])].sort(
-        (a, b) => a - b
-      ),
+      inlineBreakpoints: [...new Set(config.inlineBreakpoints ?? [])].sort((a, b) => a - b),
+      blockBreakpoints: [...new Set(config.blockBreakpoints ?? [])].sort((a, b) => a - b),
     },
   };
 }
