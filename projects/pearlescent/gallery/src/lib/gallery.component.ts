@@ -1,4 +1,5 @@
 import {
+  afterNextRender,
   ApplicationRef,
   Component,
   computed,
@@ -10,16 +11,46 @@ import {
   input,
   signal,
 } from '@angular/core';
-import { timeout, catchError, EMPTY, finalize, Subscription, first, switchMap, interval, skip } from 'rxjs';
+import {
+  timeout,
+  catchError,
+  EMPTY,
+  finalize,
+  Subscription,
+  first,
+  switchMap,
+  interval,
+  skip,
+  debounceTime,
+} from 'rxjs';
 import { GalleryPaneDirective } from './gallery-pane.directive';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
+
+export interface Config {
+  /**
+   * @description whether the gallery will position panes on the vertical or horizontal axis.
+   * @default 'horizontal'
+   */
+  direction: 'vertical' | 'horizontal';
+
+  /**
+   * @description the delay in milliseconds between pane transitions.
+   * @default 4000
+   */
+  delay: number;
+}
 
 @Component({
   selector: 'pls-gallery',
   imports: [],
   template: `<ng-content></ng-content>`,
-  styles: ``,
+  styleUrl: './gallery.component.scss',
   standalone: true,
+  host: {
+    '(scroll)': 'handleScroll($event)',
+    '[class.horizontal]': 'config().direction === "horizontal"',
+    '[class.vertical]': 'config().direction === "vertical"',
+  },
 })
 export class GalleryComponent {
   private readonly appRef = inject(ApplicationRef);
@@ -27,57 +58,39 @@ export class GalleryComponent {
   private readonly destroyRef = inject(DestroyRef);
   private readonly panes = contentChildren(GalleryPaneDirective);
   public readonly numPanes = computed(() => this.panes().length);
-  public readonly width = signal(0);
-  protected readonly currentPane = signal(0);
-  public readonly activeIndex = this.currentPane.asReadonly();
+  public readonly config = input<Config>({
+    direction: 'horizontal',
+    delay: 4000,
+  });
+  private readonly direction = computed(() => this.config().direction);
+  public readonly activePaneIndex = signal(0);
   private readonly parentController = inject(GalleryComponent, {
     optional: true,
     skipSelf: true,
   });
-  readonly forceHaltProgression = input(false);
-  public readonly delay = input(4000);
-  protected readonly scrollLeft = computed(() => {
-    const c = this.currentPane();
-    const w = this.width();
-
-    return c * w || 0;
-  });
+  public readonly forceHaltProgression = input(false);
+  public readonly delay = computed(() => this.config().delay);
   private readonly userScroll = signal(0);
-  private readonly userScrolling$ = toObservable(this.userScroll).pipe(
-    timeout(50),
-    catchError(() => EMPTY),
-    finalize(() => {
-      this.updatePaneIndex();
-      this.resumeIntervalPane();
-    })
-  );
+  private readonly userScrolling$ = toObservable(this.userScroll).pipe(debounceTime(100), takeUntilDestroyed());
 
   private intervalSub = new Subscription();
-  private userScrollSub = new Subscription();
 
   public get hostEl() {
     return this._hostEl;
   }
 
   constructor() {
-    this.userScrollSub.unsubscribe();
     this.intervalSub.unsubscribe();
+    this.userScrolling$.subscribe(() => this.updatePaneIndex());
 
-    effect(() => {
-      const sl = this.scrollLeft();
-      this.userScroll.set(sl);
-
-      if ('scrollTo' in this._hostEl.nativeElement) {
-        this.scroll(sl);
-      }
+    afterNextRender(() => {
+      if (this.forceHaltProgression()) this.resumeIntervalPane({ skipCount: 0, initial: true });
     });
 
     effect(() => {
       const h = this.forceHaltProgression();
       if (h) this.haltProgression();
-      else if (this.userScrollSub.closed) {
-        this.resumeProgression();
-      }
+      else this.resumeIntervalPane();
     });
   }
 
@@ -89,8 +102,13 @@ export class GalleryComponent {
         switchMap(() => interval(this.delay()).pipe(skip(skipCount ?? 0), takeUntilDestroyed(this.destroyRef)))
       )
       .subscribe(() => {
-        const next = this.currentPane() + 1;
-        this.currentPane.set(next % this.panes().length);
+        const num = this.numPanes();
+        const next = (this.activePaneIndex() + 1) % num;
+        this.panes()?.[next]?.el?.nativeElement.scrollIntoView({
+          behavior: 'smooth',
+          block: this.direction() === 'vertical' ? 'center' : 'nearest',
+          inline: this.direction() === 'horizontal' ? 'center' : 'nearest',
+        });
       });
   }
 
@@ -106,49 +124,40 @@ export class GalleryComponent {
 
   public handleUserSelectedPane(i: number) {
     this.haltProgression();
-    this.currentPane.set(i);
     this.resumeProgression(1);
     if (this.parentController) this.parentController.resumeProgression(1);
   }
 
-  private scroll(sl: number) {
-    this._hostEl.nativeElement.scrollTo({
-      left: sl,
-      behavior: 'smooth',
-    });
-  }
-
-  incrementPane(offset: number) {
-    this.handleUserSelectedPane(this.nextPane(offset));
-  }
-
-  nextPane(offset: number) {
-    const next = this.currentPane() + offset;
-    if (next < 0) return this.panes().length - 1;
-    else if (next >= this.panes().length) return next % this.panes().length;
-
-    return next;
-  }
-
-  protected handleScroll() {
-    this.intervalSub.unsubscribe();
-    if (this.userScrollSub.closed) {
-      this.userScrollSub = this.userScrolling$.subscribe();
-    }
-    this.userScroll.set(this._hostEl.nativeElement.scrollLeft || 0);
+  protected handleScroll($event: Event) {
+    const userScroll =
+      this.direction() === 'horizontal'
+        ? ($event.target as HTMLElement).scrollLeft
+        : ($event.target as HTMLElement).scrollTop;
+    this.userScroll.set(userScroll || 0);
   }
 
   private updatePaneIndex() {
-    const scrollLeft = this.userScroll();
-    const scrollSize = this.width();
-    const current = this.currentPane();
-    const expected = Math.round(scrollLeft / scrollSize);
-    if (current != expected) {
-      this.currentPane.set(expected);
-    }
-  }
+    const { left, top } = this._hostEl.nativeElement.getBoundingClientRect();
+    const offsets = this.panes().map((p) => p.el.nativeElement.getBoundingClientRect());
+    const start = this.direction() === 'horizontal' ? left : top;
+    const closestPane = offsets.reduce(
+      (prev: [DOMRect, number], next, i): [DOMRect, number] => {
+        const prevStart = this.direction() === 'horizontal' ? prev[0].left : prev[0].top;
+        const nextStart = this.direction() === 'horizontal' ? next.left : next.top;
 
-  // protected handleResize($event: CurrentSize): void {
-  //   this.width.set($event.inlineSize);
-  // }
+        if (Math.abs(nextStart) - start < Math.abs(prevStart) - start) {
+          return [next, i];
+        }
+
+        return prev as [DOMRect, number];
+      },
+      [offsets[0], 0]
+    );
+    this.panes()[closestPane[1]]?.el?.nativeElement.scrollIntoView({
+      behavior: 'smooth',
+      block: this.direction() === 'vertical' ? 'center' : 'nearest',
+      inline: this.direction() === 'horizontal' ? 'center' : 'nearest',
+    });
+    return this.activePaneIndex.set(closestPane[1]);
+  }
 }
