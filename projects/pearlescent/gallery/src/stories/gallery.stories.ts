@@ -1,4 +1,4 @@
-import { moduleMetadata, type Meta, type StoryObj } from '@storybook/angular';
+import { argsToTemplate, moduleMetadata, type Meta, type StoryObj } from '@storybook/angular';
 
 import { GalleryComponent, Config } from '../lib/gallery.component';
 import { GalleryPaneDirective } from '../lib/gallery-pane.directive';
@@ -9,11 +9,11 @@ const meta: Meta<GalleryComponent> = {
   component: GalleryComponent,
   tags: ['autodocs'],
   argTypes: {
-    delay: {
-      control: 'number',
-    },
     config: {
       control: 'object',
+    },
+    forceHaltProgression: {
+      control: 'boolean',
     },
   },
   args: {
@@ -37,7 +37,7 @@ type Story = StoryObj<GalleryComponent>;
 export const Primary: Story = {
   render: (args) => ({
     template: `
-            <pls-gallery>
+            <pls-gallery ${argsToTemplate(args)}>
                 <div plsGalleryPane><img src="accessibility.svg" /></div>
                 <div plsGalleryPane><img src="tutorials.svg" /></div>
                 <div plsGalleryPane><img src="youtube.svg" /></div>
@@ -53,4 +53,8 @@ export const Primary: Story = {
     ],
     props: args,
   }),
+  args: {
+    config: { direction: 'horizontal', delay: 1000 },
+    forceHaltProgression: false,
+  },
 };
