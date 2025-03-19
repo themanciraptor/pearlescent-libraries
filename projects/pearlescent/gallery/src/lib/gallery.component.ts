@@ -69,63 +69,62 @@ export class GalleryComponent {
     skipSelf: true,
   });
   public readonly forceHaltProgression = input(false);
+  private readonly _systemHaltProgression = signal(false);
+  private readonly isHalted = computed(() => this._systemHaltProgression() || this.forceHaltProgression());
   public readonly delay = computed(() => this.config().delay);
   private readonly userScroll = signal(0);
   private readonly userScrolling$ = toObservable(this.userScroll).pipe(debounceTime(100), takeUntilDestroyed());
 
-  private intervalSub = new Subscription();
+  private intervalId?: number;
+  private skipNumber = 0;
 
   public get hostEl() {
     return this._hostEl;
   }
 
   constructor() {
-    this.intervalSub.unsubscribe();
-    this.userScrolling$.subscribe(() => this.updatePaneIndex());
+    this.userScrolling$.subscribe(() => this._updatePaneIndex());
 
     afterNextRender(() => {
-      if (this.forceHaltProgression()) this.resumeIntervalPane({ skipCount: 0, initial: true });
+      this.intervalId = window.setInterval(() => this.galleryLoop(), this.delay());
     });
 
     effect(() => {
-      const h = this.forceHaltProgression();
-      if (h) this.haltProgression();
-      else this.resumeIntervalPane();
+      const i = this.delay();
+      if (this.intervalId) window.clearInterval(this.intervalId);
+      this.intervalId = window.setInterval(() => this.galleryLoop(), i);
     });
   }
 
-  protected resumeIntervalPane({ initial, skipCount } = { initial: false, skipCount: 0 }) {
-    if (!this.intervalSub.closed && !initial) return;
-    this.intervalSub = this.appRef.isStable
-      .pipe(
-        first((isStable) => isStable),
-        switchMap(() => interval(this.delay()).pipe(skip(skipCount ?? 0), takeUntilDestroyed(this.destroyRef)))
-      )
-      .subscribe(() => {
-        const num = this.numPanes();
-        const next = (this.activePaneIndex() + 1) % num;
-        this.panes()?.[next]?.el?.nativeElement.scrollIntoView({
-          behavior: 'smooth',
-          block: this.direction() === 'vertical' ? 'center' : 'nearest',
-          inline: this.direction() === 'horizontal' ? 'center' : 'nearest',
-        });
-      });
+  private galleryLoop() {
+    if (this.isHalted()) return;
+    if (this.skipNumber > 0) {
+      this.skipNumber--;
+      return;
+    }
+    const num = this.numPanes();
+    const next = (this.activePaneIndex() + 1) % num;
+    this.selectPane(next);
   }
 
   public haltProgression() {
-    this.intervalSub.unsubscribe();
+    this._systemHaltProgression.set(true);
     if (this.parentController) this.parentController.haltProgression();
   }
 
   public resumeProgression(skip = 0) {
-    this.resumeIntervalPane({ initial: false, skipCount: skip });
+    this._systemHaltProgression.set(false);
+    this.skipNumber = skip;
     if (this.parentController) this.parentController.resumeProgression();
   }
 
-  public handleUserSelectedPane(i: number) {
-    this.haltProgression();
-    this.resumeProgression(1);
-    if (this.parentController) this.parentController.resumeProgression(1);
+  public selectPane(next: number) {
+    this.panes()?.[next]?.el?.nativeElement.scrollIntoView({
+      behavior: 'smooth',
+      block: this.direction() === 'vertical' ? 'center' : 'nearest',
+      inline: this.direction() === 'horizontal' ? 'center' : 'nearest',
+    });
+    this.activePaneIndex.set(next);
   }
 
   protected handleScroll($event: Event) {
@@ -136,7 +135,7 @@ export class GalleryComponent {
     this.userScroll.set(userScroll || 0);
   }
 
-  private updatePaneIndex() {
+  private _updatePaneIndex() {
     const { left, top } = this._hostEl.nativeElement.getBoundingClientRect();
     const offsets = this.panes().map((p) => p.el.nativeElement.getBoundingClientRect());
     const start = this.direction() === 'horizontal' ? left : top;
@@ -153,11 +152,8 @@ export class GalleryComponent {
       },
       [offsets[0], 0]
     );
-    this.panes()[closestPane[1]]?.el?.nativeElement.scrollIntoView({
-      behavior: 'smooth',
-      block: this.direction() === 'vertical' ? 'center' : 'nearest',
-      inline: this.direction() === 'horizontal' ? 'center' : 'nearest',
-    });
-    return this.activePaneIndex.set(closestPane[1]);
+    if (closestPane[1] === this.activePaneIndex()) return;
+
+    return this.selectPane(closestPane[1]);
   }
 }

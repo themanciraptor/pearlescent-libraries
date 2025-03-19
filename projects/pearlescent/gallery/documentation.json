@@ -18,7 +18,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<GalleryComponent>",
-                "defaultValue": "{\n  title: 'Gallery',\n  component: GalleryComponent,\n  tags: ['autodocs'],\n  argTypes: {\n    delay: {\n      control: 'number',\n    },\n    config: {\n      control: 'object',\n    },\n  },\n  args: {\n    config: { direction: 'horizontal', delay: 1000 },\n    forceHaltProgression: false,\n  },\n  decorators: [\n    moduleMetadata({\n      imports: [GalleryPaneDirective],\n    }),\n  ],\n  subcomponents: { GalleryPaneDirective },\n  // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args\n  //   args: { onClick: fn() },\n}"
+                "defaultValue": "{\n  title: 'Gallery',\n  component: GalleryComponent,\n  tags: ['autodocs'],\n  argTypes: {\n    delay: {\n      control: 'number',\n    },\n    config: {\n      control: 'object',\n    },\n    forceHaltProgression: {\n      control: 'boolean',\n    },\n  },\n  args: {\n    config: { direction: 'horizontal', delay: 1000 },\n    forceHaltProgression: false,\n  },\n  decorators: [\n    moduleMetadata({\n      imports: [GalleryPaneDirective],\n    }),\n  ],\n  subcomponents: { GalleryPaneDirective },\n  // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args\n  //   args: { onClick: fn() },\n}"
             },
             {
                 "name": "preview",
@@ -38,7 +38,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  render: (args) => ({\n    template: `\n            <pls-gallery>\n                <div plsGalleryPane><img src=\"accessibility.svg\" /></div>\n                <div plsGalleryPane><img src=\"tutorials.svg\" /></div>\n                <div plsGalleryPane><img src=\"youtube.svg\" /></div>\n            </pls-gallery>\n        `,\n    styles: [\n      `\n        .pls-gallery-pane {\n            min-width: 90%;\n\n        }\n    `,\n    ],\n    props: args,\n  }),\n}"
+                "defaultValue": "{\n  render: (args) => ({\n    template: `\n            <pls-gallery>\n                <div plsGalleryPane><img src=\"accessibility.svg\" /></div>\n                <div plsGalleryPane><img src=\"tutorials.svg\" /></div>\n                <div plsGalleryPane><img src=\"youtube.svg\" /></div>\n            </pls-gallery>\n        `,\n    styles: [\n      `\n        .pls-gallery-pane {\n            min-width: 90%;\n\n        }\n    `,\n    ],\n    props: args,\n  }),\n  args: {\n    config: { direction: 'horizontal', delay: 1000 },\n    forceHaltProgression: false,\n  },\n}"
             }
         ],
         "functions": [],
@@ -66,7 +66,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<GalleryComponent>",
-                    "defaultValue": "{\n  title: 'Gallery',\n  component: GalleryComponent,\n  tags: ['autodocs'],\n  argTypes: {\n    delay: {\n      control: 'number',\n    },\n    config: {\n      control: 'object',\n    },\n  },\n  args: {\n    config: { direction: 'horizontal', delay: 1000 },\n    forceHaltProgression: false,\n  },\n  decorators: [\n    moduleMetadata({\n      imports: [GalleryPaneDirective],\n    }),\n  ],\n  subcomponents: { GalleryPaneDirective },\n  // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args\n  //   args: { onClick: fn() },\n}"
+                    "defaultValue": "{\n  title: 'Gallery',\n  component: GalleryComponent,\n  tags: ['autodocs'],\n  argTypes: {\n    delay: {\n      control: 'number',\n    },\n    config: {\n      control: 'object',\n    },\n    forceHaltProgression: {\n      control: 'boolean',\n    },\n  },\n  args: {\n    config: { direction: 'horizontal', delay: 1000 },\n    forceHaltProgression: false,\n  },\n  decorators: [\n    moduleMetadata({\n      imports: [GalleryPaneDirective],\n    }),\n  ],\n  subcomponents: { GalleryPaneDirective },\n  // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args\n  //   args: { onClick: fn() },\n}"
                 },
                 {
                     "name": "Primary",
@@ -76,7 +76,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  render: (args) => ({\n    template: `\n            <pls-gallery>\n                <div plsGalleryPane><img src=\"accessibility.svg\" /></div>\n                <div plsGalleryPane><img src=\"tutorials.svg\" /></div>\n                <div plsGalleryPane><img src=\"youtube.svg\" /></div>\n            </pls-gallery>\n        `,\n    styles: [\n      `\n        .pls-gallery-pane {\n            min-width: 90%;\n\n        }\n    `,\n    ],\n    props: args,\n  }),\n}"
+                    "defaultValue": "{\n  render: (args) => ({\n    template: `\n            <pls-gallery>\n                <div plsGalleryPane><img src=\"accessibility.svg\" /></div>\n                <div plsGalleryPane><img src=\"tutorials.svg\" /></div>\n                <div plsGalleryPane><img src=\"youtube.svg\" /></div>\n            </pls-gallery>\n        `,\n    styles: [\n      `\n        .pls-gallery-pane {\n            min-width: 90%;\n\n        }\n    `,\n    ],\n    props: args,\n  }),\n  args: {\n    config: { direction: 'horizontal', delay: 1000 },\n    forceHaltProgression: false,\n  },\n}"
                 }
             ],
             "projects/pearlescent/gallery/.storybook/preview.ts": [
