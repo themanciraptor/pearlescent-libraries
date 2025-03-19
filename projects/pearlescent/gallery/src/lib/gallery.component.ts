@@ -1,30 +1,17 @@
 import {
   afterNextRender,
-  ApplicationRef,
   Component,
   computed,
   contentChildren,
-  DestroyRef,
   effect,
   ElementRef,
   inject,
   input,
   signal,
 } from '@angular/core';
-import {
-  timeout,
-  catchError,
-  EMPTY,
-  finalize,
-  Subscription,
-  first,
-  switchMap,
-  interval,
-  skip,
-  debounceTime,
-} from 'rxjs';
-import { GalleryPaneDirective } from './gallery-pane.directive';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
+import { debounceTime } from 'rxjs';
+import { GalleryPaneDirective } from './gallery-pane.directive';
 
 export interface Config {
   /**
@@ -53,9 +40,7 @@ export interface Config {
   },
 })
 export class GalleryComponent {
-  private readonly appRef = inject(ApplicationRef);
   private readonly _hostEl: ElementRef<HTMLElement> = inject(ElementRef);
-  private readonly destroyRef = inject(DestroyRef);
   private readonly panes = contentChildren(GalleryPaneDirective);
   public readonly numPanes = computed(() => this.panes().length);
   public readonly config = input<Config>({
