@@ -4,6 +4,9 @@
   "compileOnSave": false,
   "compilerOptions": {
     "paths": {
+      "@pearlescent/gallery": [
+        "./dist/pearlescent/gallery"
+      ],
       "@pearlescent/resize": [
         "./dist/pearlescent/resize"
       ]

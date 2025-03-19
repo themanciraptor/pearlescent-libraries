@@ -7,7 +7,7 @@
       "projectType": "library",
       "root": "projects/pearlescent/resize",
       "sourceRoot": "projects/pearlescent/resize/src",
-      "prefix": "lib",
+      "prefix": "pls",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
@@ -28,6 +28,36 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "tsConfig": "projects/pearlescent/resize/tsconfig.spec.json",
+            "polyfills": ["zone.js", "zone.js/testing"]
+          }
+        }
+      }
+    },
+    "@pearlescent/gallery": {
+      "projectType": "library",
+      "root": "projects/pearlescent/gallery",
+      "sourceRoot": "projects/pearlescent/gallery/src",
+      "prefix": "pls",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/pearlescent/gallery/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/pearlescent/gallery/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/pearlescent/gallery/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/pearlescent/gallery/tsconfig.spec.json",
             "polyfills": ["zone.js", "zone.js/testing"]
           }
         }
