@@ -33,7 +33,7 @@
         }
       }
     },
-    "@pearlescent/gallery": {
+    "gallery": {
       "projectType": "library",
       "root": "projects/pearlescent/gallery",
       "sourceRoot": "projects/pearlescent/gallery/src",
@@ -59,6 +59,27 @@
           "options": {
             "tsConfig": "projects/pearlescent/gallery/tsconfig.spec.json",
             "polyfills": ["zone.js", "zone.js/testing"]
+          }
+        },
+        "storybook": {
+          "builder": "@storybook/angular:start-storybook",
+          "options": {
+            "configDir": "projects/pearlescent/gallery/.storybook",
+            "browserTarget": "gallery:build",
+            "experimentalZoneless": true,
+            "compodoc": true,
+            "compodocArgs": ["-e", "json", "-d", "projects/pearlescent/gallery"],
+            "port": 6006
+          }
+        },
+        "build-storybook": {
+          "builder": "@storybook/angular:build-storybook",
+          "options": {
+            "configDir": "projects/pearlescent/gallery/.storybook",
+            "browserTarget": "gallery:build",
+            "compodoc": true,
+            "compodocArgs": ["-e", "json", "-d", "projects/pearlescent/gallery"],
+            "outputDir": "dist/storybook/@pearlescent/gallery"
           }
         }
       }
