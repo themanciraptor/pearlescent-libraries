@@ -49,7 +49,6 @@ function debounce<T>(callback: (...args: T[]) => void, debounceTime: number): (.
 export class CarouselComponent {
   private readonly _hostEl: ElementRef<HTMLElement> = inject(ElementRef);
   private readonly panes = contentChildren(CarouselPaneDirective);
-  public readonly numPanes = computed(() => this.panes().length);
   public readonly config = input<Config>({
     direction: 'horizontal',
     delay: 4000,
@@ -89,7 +88,7 @@ export class CarouselComponent {
       this.skipNumber--;
       return;
     }
-    const num = this.numPanes();
+    const num = this.panes().length;
     const next = (this.activePaneIndex() + 1) % num;
     this.selectPane(next);
   }
