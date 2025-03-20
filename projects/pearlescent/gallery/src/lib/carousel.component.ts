@@ -39,7 +39,6 @@ function debounce<T>(callback: (...args: T[]) => void, debounceTime: number): (.
 
 @Component({
   selector: 'pls-carousel',
-  imports: [],
   template: `<ng-content></ng-content>`,
   styleUrl: './carousel.component.scss',
   standalone: true,
@@ -86,8 +85,10 @@ export class CarouselComponent {
 
     effect(() => {
       const i = this.delay();
-      if (this.intervalId) window.clearInterval(this.intervalId);
-      this.intervalId = window.setInterval(() => this.galleryLoop(), i);
+      if (this.intervalId) {
+        window.clearInterval(this.intervalId);
+        this.intervalId = window.setInterval(() => this.galleryLoop(), i);
+      }
     });
   }
 
@@ -132,10 +133,12 @@ export class CarouselComponent {
 
   private _updatePaneIndex() {
     const paneRects = this.panes().map((p) => p.el.nativeElement.getBoundingClientRect());
-    const closestPane = paneRects.findIndex((p) => this._rectContainsCarouselMidpoint(p));
-    if (closestPane === this.activePaneIndex() || this._rectWithinCarousel(paneRects[this.activePaneIndex()])) return;
+    if (this._rectWithinCarousel(paneRects[this.activePaneIndex()])) return;
 
-    return this.selectPane(closestPane);
+    const closestPane = paneRects.findIndex((p) => this._rectContainsCarouselMidpoint(p));
+    if (closestPane === this.activePaneIndex()) return;
+
+    return this.activePaneIndex.set(closestPane);
   }
 
   private _rectContainsCarouselMidpoint(rect: DOMRect): boolean {
