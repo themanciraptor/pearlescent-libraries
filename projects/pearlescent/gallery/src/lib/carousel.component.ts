@@ -31,7 +31,7 @@ export interface Config {
   selector: 'pls-gallery',
   imports: [],
   template: `<ng-content></ng-content>`,
-  styleUrl: './gallery.component.scss',
+  styleUrl: './carousel.component.scss',
   standalone: true,
   host: {
     '(scroll)': 'handleScroll($event)',
