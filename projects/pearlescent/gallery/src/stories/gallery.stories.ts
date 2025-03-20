@@ -35,24 +35,53 @@ type Story = StoryObj<CarouselComponent>;
 export const Primary: Story = {
   render: (args) => ({
     template: `
-            <pls-gallery ${argsToTemplate(args)}>
-                <div plsGalleryPane><img src="accessibility.svg" /></div>
-                <div plsGalleryPane><img src="tutorials.svg" /></div>
-                <div plsGalleryPane><img src="youtube.svg" /></div>
-            </pls-gallery>
+            <pls-carousel ${argsToTemplate(args)}>
+                <div plsCarouselPane><img src="accessibility.svg" /></div>
+                <div plsCarouselPane><img src="tutorials.svg" /></div>
+                <div plsCarouselPane><img src="youtube.svg" /></div>
+                <div plsCarouselPane><img src="github.svg" /></div>
+                <div plsCarouselPane><img src="discord.svg" /></div>
+            </pls-carousel>
         `,
     styles: [
       `
-        .pls-gallery-pane {
-            min-width: 90%;
-
+        .pls-carousel-pane {
+            min-width: 100%;
         }
     `,
     ],
     props: args,
   }),
   args: {
-    config: { direction: 'horizontal', delay: 1000 },
+    config: { direction: 'horizontal', delay: 5000 },
+    forceHaltProgression: false,
+  },
+};
+
+// More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
+export const ShortPanes: Story = {
+  name: 'Carousel panes are short',
+  render: (args) => ({
+    template: `
+            <pls-carousel ${argsToTemplate(args)}>
+                <div plsCarouselPane><img src="accessibility.svg" /></div>
+                <div plsCarouselPane><img src="tutorials.svg" /></div>
+                <div plsCarouselPane><img src="youtube.svg" /></div>
+                <div plsCarouselPane><img src="github.svg" /></div>
+                <div plsCarouselPane><img src="discord.svg" /></div>
+            </pls-carousel>
+        `,
+    styles: [
+      `
+        .pls-carousel-pane {
+            min-width: 30%;
+        }
+    `,
+    ],
+    props: args,
+  }),
+  args: {
+    config: { direction: 'horizontal', delay: 5000 },
     forceHaltProgression: false,
   },
 };

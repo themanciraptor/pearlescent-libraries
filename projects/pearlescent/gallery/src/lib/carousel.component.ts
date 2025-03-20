@@ -27,8 +27,18 @@ export interface Config {
   delay: number;
 }
 
+function debounce<T>(callback: (...args: T[]) => void, debounceTime: number): (...args: T[]) => void {
+  let timeoutId: number;
+  return (...args) => {
+    window.clearTimeout(timeoutId);
+    timeoutId = window.setTimeout(() => {
+      callback(...args);
+    }, debounceTime);
+  };
+}
+
 @Component({
-  selector: 'pls-gallery',
+  selector: 'pls-carousel',
   imports: [],
   template: `<ng-content></ng-content>`,
   styleUrl: './carousel.component.scss',
@@ -121,24 +131,30 @@ export class CarouselComponent {
   }
 
   private _updatePaneIndex() {
-    const { left, top } = this._hostEl.nativeElement.getBoundingClientRect();
-    const offsets = this.panes().map((p) => p.el.nativeElement.getBoundingClientRect());
-    const start = this.direction() === 'horizontal' ? left : top;
-    const closestPane = offsets.reduce(
-      (prev: [DOMRect, number], next, i): [DOMRect, number] => {
-        const prevStart = this.direction() === 'horizontal' ? prev[0].left : prev[0].top;
-        const nextStart = this.direction() === 'horizontal' ? next.left : next.top;
+    const paneRects = this.panes().map((p) => p.el.nativeElement.getBoundingClientRect());
+    const closestPane = paneRects.findIndex((p) => this._rectContainsCarouselMidpoint(p));
+    if (closestPane === this.activePaneIndex() || this._rectWithinCarousel(paneRects[this.activePaneIndex()])) return;
 
-        if (Math.abs(nextStart) - start < Math.abs(prevStart) - start) {
-          return [next, i];
-        }
+    return this.selectPane(closestPane);
+  }
 
-        return prev as [DOMRect, number];
-      },
-      [offsets[0], 0]
+  private _rectContainsCarouselMidpoint(rect: DOMRect): boolean {
+    const carouselRect = this._hostEl.nativeElement.getBoundingClientRect();
+    const midPoint =
+      this.direction() === 'horizontal'
+        ? carouselRect.left + carouselRect.width / 2
+        : carouselRect.top + carouselRect.height / 2;
+
+    return rect.left < midPoint && rect.right > midPoint;
+  }
+
+  private _rectWithinCarousel(rect: DOMRect): boolean {
+    const carouselRect = this._hostEl.nativeElement.getBoundingClientRect();
+    return (
+      rect.left >= carouselRect.left &&
+      rect.right <= carouselRect.right &&
+      rect.top >= carouselRect.top &&
+      rect.bottom <= carouselRect.bottom
     );
-    if (closestPane[1] === this.activePaneIndex()) return;
-
-    return this.selectPane(closestPane[1]);
   }
 }

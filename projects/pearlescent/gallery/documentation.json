@@ -38,7 +38,17 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  render: (args) => ({\n    template: `\n            <pls-gallery ${argsToTemplate(args)}>\n                <div plsGalleryPane><img src=\"accessibility.svg\" /></div>\n                <div plsGalleryPane><img src=\"tutorials.svg\" /></div>\n                <div plsGalleryPane><img src=\"youtube.svg\" /></div>\n            </pls-gallery>\n        `,\n    styles: [\n      `\n        .pls-gallery-pane {\n            min-width: 90%;\n\n        }\n    `,\n    ],\n    props: args,\n  }),\n  args: {\n    config: { direction: 'horizontal', delay: 1000 },\n    forceHaltProgression: false,\n  },\n}"
+                "defaultValue": "{\n  render: (args) => ({\n    template: `\n            <pls-carousel ${argsToTemplate(args)}>\n                <div plsCarouselPane><img src=\"accessibility.svg\" /></div>\n                <div plsCarouselPane><img src=\"tutorials.svg\" /></div>\n                <div plsCarouselPane><img src=\"youtube.svg\" /></div>\n                <div plsCarouselPane><img src=\"github.svg\" /></div>\n                <div plsCarouselPane><img src=\"discord.svg\" /></div>\n            </pls-carousel>\n        `,\n    styles: [\n      `\n        .pls-carousel-pane {\n            min-width: 100%;\n        }\n    `,\n    ],\n    props: args,\n  }),\n  args: {\n    config: { direction: 'horizontal', delay: 5000 },\n    forceHaltProgression: false,\n  },\n}"
+            },
+            {
+                "name": "ShortPanes",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/pearlescent/gallery/src/stories/gallery.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  name: 'Carousel panes are short',\n  render: (args) => ({\n    template: `\n            <pls-carousel ${argsToTemplate(args)}>\n                <div plsCarouselPane><img src=\"accessibility.svg\" /></div>\n                <div plsCarouselPane><img src=\"tutorials.svg\" /></div>\n                <div plsCarouselPane><img src=\"youtube.svg\" /></div>\n                <div plsCarouselPane><img src=\"github.svg\" /></div>\n                <div plsCarouselPane><img src=\"discord.svg\" /></div>\n            </pls-carousel>\n        `,\n    styles: [\n      `\n        .pls-carousel-pane {\n            min-width: 30%;\n        }\n    `,\n    ],\n    props: args,\n  }),\n  args: {\n    config: { direction: 'horizontal', delay: 5000 },\n    forceHaltProgression: false,\n  },\n}"
             }
         ],
         "functions": [],
@@ -76,7 +86,17 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  render: (args) => ({\n    template: `\n            <pls-gallery ${argsToTemplate(args)}>\n                <div plsGalleryPane><img src=\"accessibility.svg\" /></div>\n                <div plsGalleryPane><img src=\"tutorials.svg\" /></div>\n                <div plsGalleryPane><img src=\"youtube.svg\" /></div>\n            </pls-gallery>\n        `,\n    styles: [\n      `\n        .pls-gallery-pane {\n            min-width: 90%;\n\n        }\n    `,\n    ],\n    props: args,\n  }),\n  args: {\n    config: { direction: 'horizontal', delay: 1000 },\n    forceHaltProgression: false,\n  },\n}"
+                    "defaultValue": "{\n  render: (args) => ({\n    template: `\n            <pls-carousel ${argsToTemplate(args)}>\n                <div plsCarouselPane><img src=\"accessibility.svg\" /></div>\n                <div plsCarouselPane><img src=\"tutorials.svg\" /></div>\n                <div plsCarouselPane><img src=\"youtube.svg\" /></div>\n                <div plsCarouselPane><img src=\"github.svg\" /></div>\n                <div plsCarouselPane><img src=\"discord.svg\" /></div>\n            </pls-carousel>\n        `,\n    styles: [\n      `\n        .pls-carousel-pane {\n            min-width: 100%;\n        }\n    `,\n    ],\n    props: args,\n  }),\n  args: {\n    config: { direction: 'horizontal', delay: 5000 },\n    forceHaltProgression: false,\n  },\n}"
+                },
+                {
+                    "name": "ShortPanes",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/pearlescent/gallery/src/stories/gallery.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  name: 'Carousel panes are short',\n  render: (args) => ({\n    template: `\n            <pls-carousel ${argsToTemplate(args)}>\n                <div plsCarouselPane><img src=\"accessibility.svg\" /></div>\n                <div plsCarouselPane><img src=\"tutorials.svg\" /></div>\n                <div plsCarouselPane><img src=\"youtube.svg\" /></div>\n                <div plsCarouselPane><img src=\"github.svg\" /></div>\n                <div plsCarouselPane><img src=\"discord.svg\" /></div>\n            </pls-carousel>\n        `,\n    styles: [\n      `\n        .pls-carousel-pane {\n            min-width: 30%;\n        }\n    `,\n    ],\n    props: args,\n  }),\n  args: {\n    config: { direction: 'horizontal', delay: 5000 },\n    forceHaltProgression: false,\n  },\n}"
                 }
             ],
             "projects/pearlescent/gallery/.storybook/preview.ts": [
@@ -141,6 +161,16 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "Primary",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/pearlescent/gallery/src/stories/gallery.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "ShortPanes",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
