@@ -1,12 +1,12 @@
 import { argsToTemplate, moduleMetadata, type Meta, type StoryObj } from '@storybook/angular';
 
-import { GalleryComponent } from '../lib/carousel.component';
+import { CarouselComponent } from '../lib/carousel.component';
 import { CarouselPaneDirective } from '../lib/carousel-pane.directive';
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories
-const meta: Meta<GalleryComponent> = {
+const meta: Meta<CarouselComponent> = {
   title: 'Gallery',
-  component: GalleryComponent,
+  component: CarouselComponent,
   tags: ['autodocs'],
   argTypes: {
     config: {
@@ -29,7 +29,7 @@ const meta: Meta<GalleryComponent> = {
 };
 
 export default meta;
-type Story = StoryObj<GalleryComponent>;
+type Story = StoryObj<CarouselComponent>;
 
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const Primary: Story = {

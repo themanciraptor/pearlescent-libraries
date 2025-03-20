@@ -17,8 +17,8 @@
                 "file": "projects/pearlescent/gallery/src/stories/gallery.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Meta<GalleryComponent>",
-                "defaultValue": "{\n  title: 'Gallery',\n  component: GalleryComponent,\n  tags: ['autodocs'],\n  argTypes: {\n    config: {\n      control: 'object',\n    },\n    forceHaltProgression: {\n      control: 'boolean',\n    },\n  },\n  args: {\n    config: { direction: 'horizontal', delay: 1000 },\n    forceHaltProgression: false,\n  },\n  decorators: [\n    moduleMetadata({\n      imports: [CarouselPaneDirective],\n    }),\n  ],\n  subcomponents: { CarouselPaneDirective },\n  // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args\n  //   args: { onClick: fn() },\n}"
+                "type": "Meta<CarouselComponent>",
+                "defaultValue": "{\n  title: 'Gallery',\n  component: CarouselComponent,\n  tags: ['autodocs'],\n  argTypes: {\n    config: {\n      control: 'object',\n    },\n    forceHaltProgression: {\n      control: 'boolean',\n    },\n  },\n  args: {\n    config: { direction: 'horizontal', delay: 1000 },\n    forceHaltProgression: false,\n  },\n  decorators: [\n    moduleMetadata({\n      imports: [CarouselPaneDirective],\n    }),\n  ],\n  subcomponents: { CarouselPaneDirective },\n}"
             },
             {
                 "name": "preview",
@@ -47,7 +47,7 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<GalleryComponent>",
+                "rawtype": "StoryObj<CarouselComponent>",
                 "file": "projects/pearlescent/gallery/src/stories/gallery.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -65,8 +65,8 @@
                     "file": "projects/pearlescent/gallery/src/stories/gallery.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "Meta<GalleryComponent>",
-                    "defaultValue": "{\n  title: 'Gallery',\n  component: GalleryComponent,\n  tags: ['autodocs'],\n  argTypes: {\n    config: {\n      control: 'object',\n    },\n    forceHaltProgression: {\n      control: 'boolean',\n    },\n  },\n  args: {\n    config: { direction: 'horizontal', delay: 1000 },\n    forceHaltProgression: false,\n  },\n  decorators: [\n    moduleMetadata({\n      imports: [CarouselPaneDirective],\n    }),\n  ],\n  subcomponents: { CarouselPaneDirective },\n  // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args\n  //   args: { onClick: fn() },\n}"
+                    "type": "Meta<CarouselComponent>",
+                    "defaultValue": "{\n  title: 'Gallery',\n  component: CarouselComponent,\n  tags: ['autodocs'],\n  argTypes: {\n    config: {\n      control: 'object',\n    },\n    forceHaltProgression: {\n      control: 'boolean',\n    },\n  },\n  args: {\n    config: { direction: 'horizontal', delay: 1000 },\n    forceHaltProgression: false,\n  },\n  decorators: [\n    moduleMetadata({\n      imports: [CarouselPaneDirective],\n    }),\n  ],\n  subcomponents: { CarouselPaneDirective },\n}"
                 },
                 {
                     "name": "Primary",
@@ -100,7 +100,7 @@
                     "name": "Story",
                     "ctype": "miscellaneous",
                     "subtype": "typealias",
-                    "rawtype": "StoryObj<GalleryComponent>",
+                    "rawtype": "StoryObj<CarouselComponent>",
                     "file": "projects/pearlescent/gallery/src/stories/gallery.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",

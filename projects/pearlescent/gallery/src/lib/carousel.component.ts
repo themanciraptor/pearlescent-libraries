@@ -39,7 +39,7 @@ export interface Config {
     '[class.vertical]': 'config().direction === "vertical"',
   },
 })
-export class GalleryComponent {
+export class CarouselComponent {
   private readonly _hostEl: ElementRef<HTMLElement> = inject(ElementRef);
   private readonly panes = contentChildren(CarouselPaneDirective);
   public readonly numPanes = computed(() => this.panes().length);
@@ -49,7 +49,7 @@ export class GalleryComponent {
   });
   private readonly direction = computed(() => this.config().direction);
   public readonly activePaneIndex = signal(0);
-  private readonly parentController = inject(GalleryComponent, {
+  private readonly parentController = inject(CarouselComponent, {
     optional: true,
     skipSelf: true,
   });
