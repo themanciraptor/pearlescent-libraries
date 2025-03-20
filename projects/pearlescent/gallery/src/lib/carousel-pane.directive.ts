@@ -4,6 +4,6 @@ import { Directive, ElementRef, forwardRef, inject, signal } from '@angular/core
   selector: '[plsGalleryPane]',
   host: { '[class.pls-gallery-pane]': 'true' },
 })
-export class GalleryPaneDirective {
+export class CarouselPaneDirective {
   readonly el: ElementRef<HTMLElement> = inject(ElementRef);
 }

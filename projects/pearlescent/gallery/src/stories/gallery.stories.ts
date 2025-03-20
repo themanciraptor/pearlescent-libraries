@@ -1,7 +1,7 @@
 import { argsToTemplate, moduleMetadata, type Meta, type StoryObj } from '@storybook/angular';
 
 import { GalleryComponent } from '../lib/carousel.component';
-import { GalleryPaneDirective } from '../lib/carousel-pane.directive';
+import { CarouselPaneDirective } from '../lib/carousel-pane.directive';
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories
 const meta: Meta<GalleryComponent> = {
@@ -22,12 +22,10 @@ const meta: Meta<GalleryComponent> = {
   },
   decorators: [
     moduleMetadata({
-      imports: [GalleryPaneDirective],
+      imports: [CarouselPaneDirective],
     }),
   ],
-  subcomponents: { GalleryPaneDirective },
-  // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
-  //   args: { onClick: fn() },
+  subcomponents: { CarouselPaneDirective },
 };
 
 export default meta;

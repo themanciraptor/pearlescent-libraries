@@ -1,8 +1,8 @@
-import { GalleryPaneDirective } from './carousel-pane.directive';
+import { CarouselPaneDirective } from './carousel-pane.directive';
 
 describe('GalleryPaneDirective', () => {
   it('should create an instance', () => {
-    const directive = new GalleryPaneDirective();
+    const directive = new CarouselPaneDirective();
     expect(directive).toBeTruthy();
   });
 });

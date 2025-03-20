@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { debounceTime } from 'rxjs';
-import { GalleryPaneDirective } from './carousel-pane.directive';
+import { CarouselPaneDirective } from './carousel-pane.directive';
 
 export interface Config {
   /**
@@ -41,7 +41,7 @@ export interface Config {
 })
 export class GalleryComponent {
   private readonly _hostEl: ElementRef<HTMLElement> = inject(ElementRef);
-  private readonly panes = contentChildren(GalleryPaneDirective);
+  private readonly panes = contentChildren(CarouselPaneDirective);
   public readonly numPanes = computed(() => this.panes().length);
   public readonly config = input<Config>({
     direction: 'horizontal',
