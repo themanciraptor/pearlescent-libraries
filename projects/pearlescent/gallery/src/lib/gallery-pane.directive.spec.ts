@@ -1,4 +1,4 @@
-import { GalleryPaneDirective } from './gallery-pane.directive';
+import { GalleryPaneDirective } from './carousel-pane.directive';
 
 describe('GalleryPaneDirective', () => {
   it('should create an instance', () => {

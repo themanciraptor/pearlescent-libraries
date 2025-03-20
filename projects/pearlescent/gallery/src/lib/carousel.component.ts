@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { debounceTime } from 'rxjs';
-import { GalleryPaneDirective } from './gallery-pane.directive';
+import { GalleryPaneDirective } from './carousel-pane.directive';
 
 export interface Config {
   /**

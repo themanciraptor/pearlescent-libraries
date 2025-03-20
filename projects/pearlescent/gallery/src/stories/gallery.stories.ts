@@ -1,7 +1,7 @@
 import { argsToTemplate, moduleMetadata, type Meta, type StoryObj } from '@storybook/angular';
 
-import { GalleryComponent, Config } from '../lib/gallery.component';
-import { GalleryPaneDirective } from '../lib/gallery-pane.directive';
+import { GalleryComponent } from '../lib/carousel.component';
+import { GalleryPaneDirective } from '../lib/carousel-pane.directive';
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories
 const meta: Meta<GalleryComponent> = {
