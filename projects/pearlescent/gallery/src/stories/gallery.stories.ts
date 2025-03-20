@@ -33,6 +33,7 @@ type Story = StoryObj<CarouselComponent>;
 
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const Primary: Story = {
+  name: 'Carousel with full-width panes',
   render: (args) => ({
     template: `
             <pls-carousel ${argsToTemplate(args)}>

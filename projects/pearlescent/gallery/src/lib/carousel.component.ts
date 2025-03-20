@@ -9,8 +9,6 @@ import {
   input,
   signal,
 } from '@angular/core';
-import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
-import { debounceTime } from 'rxjs';
 import { CarouselPaneDirective } from './carousel-pane.directive';
 
 export interface Config {
@@ -43,7 +41,7 @@ function debounce<T>(callback: (...args: T[]) => void, debounceTime: number): (.
   styleUrl: './carousel.component.scss',
   standalone: true,
   host: {
-    '(scroll)': 'handleScroll($event)',
+    '(scroll)': 'debouncedIndexUpdate()',
     '[class.horizontal]': 'config().direction === "horizontal"',
     '[class.vertical]': 'config().direction === "vertical"',
   },
@@ -66,19 +64,12 @@ export class CarouselComponent {
   private readonly _systemHaltProgression = signal(false);
   private readonly isHalted = computed(() => this._systemHaltProgression() || this.forceHaltProgression());
   public readonly delay = computed(() => this.config().delay);
-  private readonly userScroll = signal(0);
-  private readonly userScrolling$ = toObservable(this.userScroll).pipe(debounceTime(100), takeUntilDestroyed());
+  protected readonly debouncedIndexUpdate = debounce(() => this._updatePaneIndex(), 100);
 
   private intervalId?: number;
   private skipNumber = 0;
 
-  public get hostEl() {
-    return this._hostEl;
-  }
-
   constructor() {
-    this.userScrolling$.subscribe(() => this._updatePaneIndex());
-
     afterNextRender(() => {
       this.intervalId = window.setInterval(() => this.galleryLoop(), this.delay());
     });
@@ -121,14 +112,6 @@ export class CarouselComponent {
       inline: this.direction() === 'horizontal' ? 'center' : 'nearest',
     });
     this.activePaneIndex.set(next);
-  }
-
-  protected handleScroll($event: Event) {
-    const userScroll =
-      this.direction() === 'horizontal'
-        ? ($event.target as HTMLElement).scrollLeft
-        : ($event.target as HTMLElement).scrollTop;
-    this.userScroll.set(userScroll || 0);
   }
 
   private _updatePaneIndex() {
