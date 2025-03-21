@@ -60,7 +60,7 @@ export class ResizeDirective {
   private readonly boxModel = computed(() => this.resizeConfig()?.boxModel ?? this.service.boxModel());
 
   private readonly resizeCallback = (entry: ResizeObserverEntry) => {
-    const boxModelKey = this.boxModel() ? 'contentBoxSize' : 'borderBoxSize';
+    const boxModelKey = this.boxModel() === 'content-box' ? 'contentBoxSize' : 'borderBoxSize';
     const { inlineSize, blockSize } = entry[boxModelKey][0];
     const next = { inlineSize, blockSize };
     this.sizeChanged.emit(next);
