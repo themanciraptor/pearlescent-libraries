@@ -1,10 +1,10 @@
 {
   "name": "@pearlescent/gallery",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "peerDependencies": {
     "@angular/common": "^19.0.0",
     "@angular/core": "^19.0.0",
-    "@pearlescent/visibility": "^0.0.1"
+    "@pearlescent/visibility": "^0.1.0"
   },
   "dependencies": {
     "tslib": "^2.3.0"
@@ -16,6 +16,8 @@
     "gallery"
   ],
   "repository": {
-    "url": "github.com/themanciraptor/pearlescent-libraries"
+    "url": "git+https://github.com/themanciraptor/pearlescent-libraries",
+    "type": "git",
+    "directory": "projects/pearlescent/gallery"
   }
 }
