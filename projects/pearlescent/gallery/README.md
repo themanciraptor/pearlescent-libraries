@@ -1,63 +1,21 @@
 # Gallery
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.0.
+The intent of this library is to provide a series of utilities that make building galleries easy using native browser functionality as much as possible.
 
-## Code scaffolding
+## Carousel
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+The CarouselComponent is a reusable UI component that displays a series of panes in a carousel layout, allowing users to navigate through them. It supports horizontal and vertical directions, and can be configured with a delay between pane transitions. The component also provides methods to halt and resume progression, making it easy to integrate with other interactive elements.
 
-```bash
-ng generate component component-name
+To use the CarouselComponent, simply wrap your panes in the `<pls-carousel>` element and add the `plsCarouselPane` directive to each pane. Configure the carousel's direction and delay using the `config` input. For example:
+
+```html
+<pls-carousel [config]="{ direction: 'horizontal', delay: 5000 }">
+  <div plsCarouselPane>...</div>
+  <div plsCarouselPane>...</div>
+  <div plsCarouselPane>...</div>
+  <div plsCarouselPane>...</div>
+  <div plsCarouselPane>...</div>
+</pls-carousel>
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the library, run:
-
-```bash
-ng build gallery
-```
-
-This command will compile your project, and the build artifacts will be placed in the `dist/` directory.
-
-### Publishing the Library
-
-Once the project is built, you can publish your library by following these steps:
-
-1. Navigate to the `dist` directory:
-   ```bash
-   cd dist/gallery
-   ```
-
-2. Run the `npm publish` command to publish your library to the npm registry:
-   ```bash
-   npm publish
-   ```
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Panes do not necessarily need to be the same dimensions, some could be wider.

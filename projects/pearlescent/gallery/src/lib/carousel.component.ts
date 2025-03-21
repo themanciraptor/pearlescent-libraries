@@ -3,6 +3,7 @@ import {
   Component,
   computed,
   contentChildren,
+  DestroyRef,
   effect,
   ElementRef,
   inject,
@@ -10,6 +11,7 @@ import {
   signal,
 } from '@angular/core';
 import { CarouselPaneDirective } from './carousel-pane.directive';
+import { IsVisibleDirective } from '@pearlescent/visibility';
 
 export interface Config {
   /**
@@ -40,6 +42,7 @@ function debounce<T>(callback: (...args: T[]) => void, debounceTime: number): (.
   template: `<ng-content></ng-content>`,
   styleUrl: './carousel.component.scss',
   standalone: true,
+  hostDirectives: [IsVisibleDirective],
   host: {
     '(scroll)': 'debouncedIndexUpdate()',
     '[class.horizontal]': 'config().direction === "horizontal"',
@@ -61,14 +64,20 @@ export class CarouselComponent {
   });
   public readonly forceHaltProgression = input(false);
   private readonly _systemHaltProgression = signal(false);
-  private readonly isHalted = computed(() => this._systemHaltProgression() || this.forceHaltProgression());
+  private readonly isVisible = inject(IsVisibleDirective).isVisible;
+  private readonly isHalted = computed(
+    () => this._systemHaltProgression() || this.forceHaltProgression() || !this.isVisible()
+  );
   public readonly delay = computed(() => this.config().delay);
   protected readonly debouncedIndexUpdate = debounce(() => this._updatePaneIndex(), 100);
 
   private intervalId?: number;
   private skipNumber = 0;
+  private readonly id = Math.random().toString(36).slice(2);
 
-  constructor() {
+  constructor(destroyRef: DestroyRef) {
+    this._hostEl.nativeElement.id = this.id;
+
     afterNextRender(() => {
       this.intervalId = window.setInterval(() => this.galleryLoop(), this.delay());
     });
@@ -79,6 +88,10 @@ export class CarouselComponent {
         window.clearInterval(this.intervalId);
         this.intervalId = window.setInterval(() => this.galleryLoop(), i);
       }
+    });
+
+    destroyRef.onDestroy(() => {
+      window.clearInterval(this.intervalId);
     });
   }
 
