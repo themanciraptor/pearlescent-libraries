@@ -1,0 +1,190 @@
+{
+    "pipes": [],
+    "interfaces": [],
+    "injectables": [],
+    "guards": [],
+    "interceptors": [],
+    "classes": [],
+    "directives": [],
+    "components": [],
+    "modules": [],
+    "miscellaneous": {
+        "variables": [
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/pearlescent/gallery/src/stories/gallery.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<CarouselComponent>",
+                "defaultValue": "{\n  title: 'Gallery',\n  component: CarouselComponent,\n  tags: ['autodocs'],\n  argTypes: {\n    config: {\n      control: 'object',\n    },\n    forceHaltProgression: {\n      control: 'boolean',\n    },\n  },\n  args: {\n    config: { direction: 'horizontal', delay: 1000 },\n    forceHaltProgression: false,\n  },\n  decorators: [\n    moduleMetadata({\n      imports: [CarouselPaneDirective],\n    }),\n  ],\n  subcomponents: { CarouselPaneDirective },\n}"
+            },
+            {
+                "name": "preview",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/pearlescent/gallery/.storybook/preview.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Preview",
+                "defaultValue": "{\n  parameters: {\n    controls: {\n      matchers: {\n       color: /(background|color)$/i,\n       date: /Date$/i,\n      },\n    },\n  },\n}"
+            },
+            {
+                "name": "Primary",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/pearlescent/gallery/src/stories/gallery.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  name: 'Carousel with full-width panes',\n  render: (args) => ({\n    template: `\n            <pls-carousel ${argsToTemplate(args)}>\n                <div plsCarouselPane><img src=\"accessibility.svg\" /></div>\n                <div plsCarouselPane><img src=\"tutorials.svg\" /></div>\n                <div plsCarouselPane><img src=\"youtube.svg\" /></div>\n                <div plsCarouselPane><img src=\"github.svg\" /></div>\n                <div plsCarouselPane><img src=\"discord.svg\" /></div>\n            </pls-carousel>\n        `,\n    styles: [\n      `\n        .pls-carousel-pane {\n            min-width: 100%;\n        }\n    `,\n    ],\n    props: args,\n  }),\n  args: {\n    config: { direction: 'horizontal', delay: 5000 },\n    forceHaltProgression: false,\n  },\n}"
+            },
+            {
+                "name": "ShortPanes",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/pearlescent/gallery/src/stories/gallery.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  name: 'Carousel panes are short',\n  render: (args) => ({\n    template: `\n            <pls-carousel ${argsToTemplate(args)}>\n                <div plsCarouselPane><img src=\"accessibility.svg\" /></div>\n                <div plsCarouselPane><img src=\"tutorials.svg\" /></div>\n                <div plsCarouselPane><img src=\"youtube.svg\" /></div>\n                <div plsCarouselPane><img src=\"github.svg\" /></div>\n                <div plsCarouselPane><img src=\"discord.svg\" /></div>\n            </pls-carousel>\n        `,\n    styles: [\n      `\n        .pls-carousel-pane {\n            min-width: 30%;\n        }\n    `,\n    ],\n    props: args,\n  }),\n  args: {\n    config: { direction: 'horizontal', delay: 5000 },\n    forceHaltProgression: false,\n  },\n}"
+            }
+        ],
+        "functions": [],
+        "typealiases": [
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<CarouselComponent>",
+                "file": "projects/pearlescent/gallery/src/stories/gallery.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 183
+            }
+        ],
+        "enumerations": [],
+        "groupedVariables": {
+            "projects/pearlescent/gallery/src/stories/gallery.stories.ts": [
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/pearlescent/gallery/src/stories/gallery.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<CarouselComponent>",
+                    "defaultValue": "{\n  title: 'Gallery',\n  component: CarouselComponent,\n  tags: ['autodocs'],\n  argTypes: {\n    config: {\n      control: 'object',\n    },\n    forceHaltProgression: {\n      control: 'boolean',\n    },\n  },\n  args: {\n    config: { direction: 'horizontal', delay: 1000 },\n    forceHaltProgression: false,\n  },\n  decorators: [\n    moduleMetadata({\n      imports: [CarouselPaneDirective],\n    }),\n  ],\n  subcomponents: { CarouselPaneDirective },\n}"
+                },
+                {
+                    "name": "Primary",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/pearlescent/gallery/src/stories/gallery.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  name: 'Carousel with full-width panes',\n  render: (args) => ({\n    template: `\n            <pls-carousel ${argsToTemplate(args)}>\n                <div plsCarouselPane><img src=\"accessibility.svg\" /></div>\n                <div plsCarouselPane><img src=\"tutorials.svg\" /></div>\n                <div plsCarouselPane><img src=\"youtube.svg\" /></div>\n                <div plsCarouselPane><img src=\"github.svg\" /></div>\n                <div plsCarouselPane><img src=\"discord.svg\" /></div>\n            </pls-carousel>\n        `,\n    styles: [\n      `\n        .pls-carousel-pane {\n            min-width: 100%;\n        }\n    `,\n    ],\n    props: args,\n  }),\n  args: {\n    config: { direction: 'horizontal', delay: 5000 },\n    forceHaltProgression: false,\n  },\n}"
+                },
+                {
+                    "name": "ShortPanes",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/pearlescent/gallery/src/stories/gallery.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  name: 'Carousel panes are short',\n  render: (args) => ({\n    template: `\n            <pls-carousel ${argsToTemplate(args)}>\n                <div plsCarouselPane><img src=\"accessibility.svg\" /></div>\n                <div plsCarouselPane><img src=\"tutorials.svg\" /></div>\n                <div plsCarouselPane><img src=\"youtube.svg\" /></div>\n                <div plsCarouselPane><img src=\"github.svg\" /></div>\n                <div plsCarouselPane><img src=\"discord.svg\" /></div>\n            </pls-carousel>\n        `,\n    styles: [\n      `\n        .pls-carousel-pane {\n            min-width: 30%;\n        }\n    `,\n    ],\n    props: args,\n  }),\n  args: {\n    config: { direction: 'horizontal', delay: 5000 },\n    forceHaltProgression: false,\n  },\n}"
+                }
+            ],
+            "projects/pearlescent/gallery/.storybook/preview.ts": [
+                {
+                    "name": "preview",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/pearlescent/gallery/.storybook/preview.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Preview",
+                    "defaultValue": "{\n  parameters: {\n    controls: {\n      matchers: {\n       color: /(background|color)$/i,\n       date: /Date$/i,\n      },\n    },\n  },\n}"
+                }
+            ]
+        },
+        "groupedFunctions": {},
+        "groupedEnumerations": {},
+        "groupedTypeAliases": {
+            "projects/pearlescent/gallery/src/stories/gallery.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<CarouselComponent>",
+                    "file": "projects/pearlescent/gallery/src/stories/gallery.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 183
+                }
+            ]
+        }
+    },
+    "routes": [],
+    "coverage": {
+        "count": 0,
+        "status": "low",
+        "files": [
+            {
+                "filePath": "projects/pearlescent/gallery/.storybook/preview.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "preview",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/pearlescent/gallery/src/stories/gallery.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/pearlescent/gallery/src/stories/gallery.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Primary",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/pearlescent/gallery/src/stories/gallery.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "ShortPanes",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/pearlescent/gallery/src/stories/gallery.stories.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "Story",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            }
+        ]
+    }
+}

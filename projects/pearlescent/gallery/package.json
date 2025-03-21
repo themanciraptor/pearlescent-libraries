@@ -1,18 +1,19 @@
 {
-  "name": "@pearlescent/resize",
-  "version": "0.0.4",
+  "name": "@pearlescent/gallery",
+  "version": "0.0.1",
   "peerDependencies": {
     "@angular/common": "^19.0.0",
     "@angular/core": "^19.0.0"
   },
   "dependencies": {
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "@pearlescent/visibility": "^0.0.1"
   },
   "sideEffects": false,
   "keywords": [
     "angular",
-    "breakpoints",
-    "resize"
+    "carousel",
+    "gallery"
   ],
   "repository": {
     "url": "github.com/themanciraptor/pearlescent-libraries"

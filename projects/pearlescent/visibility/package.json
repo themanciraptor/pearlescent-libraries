@@ -1,6 +1,6 @@
 {
-  "name": "@pearlescent/resize",
-  "version": "0.0.4",
+  "name": "@pearlescent/visibility",
+  "version": "0.0.1",
   "peerDependencies": {
     "@angular/common": "^19.0.0",
     "@angular/core": "^19.0.0"
@@ -11,8 +11,8 @@
   "sideEffects": false,
   "keywords": [
     "angular",
-    "breakpoints",
-    "resize"
+    "IntersectionObserver",
+    "intersection"
   ],
   "repository": {
     "url": "github.com/themanciraptor/pearlescent-libraries"

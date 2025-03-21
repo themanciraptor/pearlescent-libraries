@@ -4,8 +4,17 @@
   "compileOnSave": false,
   "compilerOptions": {
     "paths": {
+      "@pearlescent/gallery": [
+        "./dist/pearlescent/gallery"
+      ],
       "@pearlescent/resize": [
         "./dist/pearlescent/resize"
+      ],
+      "@pearlescent/visibility": [
+        "./dist/pearlescent/visibility"
+      ],
+      "visibility": [
+        "./dist/visibility"
       ]
     },
     "outDir": "./dist/out-tsc",

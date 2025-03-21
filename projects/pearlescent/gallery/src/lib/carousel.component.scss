@@ -1,0 +1,25 @@
+:host {
+  // TODO: If these are set this way, we probably want to bring along the gallery selctor
+  scrollbar-color: transparent transparent;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+
+  display: flex;
+  flex-wrap: nowrap;
+
+  // TODO: this may be too restrictive
+  &.horizontal {
+    overflow-x: scroll;
+    scroll-snap-type: x;
+  }
+
+  &.vertical {
+    flex-direction: column;
+    overflow-y: scroll;
+    scroll-snap-type: y;
+  }
+
+  .pls-carousel-pane {
+    scroll-snap-align: center;
+  }
+}
