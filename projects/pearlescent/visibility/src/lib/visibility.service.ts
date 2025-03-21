@@ -4,18 +4,12 @@ import { afterNextRender, afterRenderEffect, DestroyRef, Injectable, signal, Wri
   providedIn: 'root',
 })
 export class VisibilityService {
-  private readonly registeredEls = signal<Map<Element, WritableSignal<boolean>>>(new Map());
+  private readonly registeredEls = new Map<Element, WritableSignal<boolean>>();
   private intersectionObserver?: IntersectionObserver;
 
   constructor() {
     afterNextRender({
       read: () => this.initializeIntersectionObserver(),
-    });
-    afterRenderEffect({
-      read: () => {
-        const m = this.registeredEls();
-        m.forEach((_, k) => this.intersectionObserver?.observe(k));
-      },
     });
   }
 
@@ -23,28 +17,29 @@ export class VisibilityService {
     this.intersectionObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          const isVisible = this.registeredEls().get(entry.target);
+          const isVisible = this.registeredEls.get(entry.target);
           if (!isVisible) return this.unregister(entry.target);
           isVisible.set(entry.isIntersecting);
         });
       },
       { threshold: [0.0, 1.0] }
     );
+
+    this.registeredEls.forEach((_, el) => this.intersectionObserver?.observe(el));
   }
 
   public register(el: Element, signalRef: WritableSignal<boolean>, destroyRef: DestroyRef) {
-    this.registeredEls.set(this.registeredEls().set(el, signalRef));
+    this.registeredEls.set(el, signalRef);
+    this.intersectionObserver?.observe(el);
     destroyRef.onDestroy(() => {
       this.unregister(el);
     });
   }
 
   public unregister(el: Element) {
-    const m = this.registeredEls();
-    m.delete(el);
-    this.registeredEls.set(m);
+    this.registeredEls.delete(el);
     this.intersectionObserver?.unobserve(el);
-    if (this.registeredEls().size === 0) {
+    if (this.registeredEls.size === 0) {
       this.intersectionObserver?.disconnect();
     }
   }
