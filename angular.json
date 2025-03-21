@@ -83,6 +83,36 @@
           }
         }
       }
+    },
+    "visibility": {
+      "projectType": "library",
+      "root": "projects/pearlescent/visibility",
+      "sourceRoot": "projects/pearlescent/visibility/src",
+      "prefix": "pls",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/pearlescent/visibility/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/pearlescent/visibility/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/pearlescent/visibility/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/pearlescent/visibility/tsconfig.spec.json",
+            "polyfills": ["zone.js", "zone.js/testing"]
+          }
+        }
+      }
     }
   },
   "cli": {

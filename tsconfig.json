@@ -9,6 +9,12 @@
       ],
       "@pearlescent/resize": [
         "./dist/pearlescent/resize"
+      ],
+      "@pearlescent/visibility": [
+        "./dist/pearlescent/visibility"
+      ],
+      "visibility": [
+        "./dist/visibility"
       ]
     },
     "outDir": "./dist/out-tsc",
