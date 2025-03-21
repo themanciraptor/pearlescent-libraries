@@ -1,5 +1,6 @@
 import {
   afterNextRender,
+  afterRenderEffect,
   Component,
   computed,
   contentChildren,
@@ -84,7 +85,7 @@ export class CarouselComponent {
       this.intervalId = window.setInterval(() => this.galleryLoop(), this.delay());
     });
 
-    effect(() => {
+    afterRenderEffect(() => {
       const i = this.delay();
       if (this.intervalId) {
         window.clearInterval(this.intervalId);
@@ -93,7 +94,9 @@ export class CarouselComponent {
     });
 
     destroyRef.onDestroy(() => {
-      window.clearInterval(this.intervalId);
+      if (this.intervalId && window) {
+        window.clearInterval(this.intervalId);
+      }
     });
   }
 
