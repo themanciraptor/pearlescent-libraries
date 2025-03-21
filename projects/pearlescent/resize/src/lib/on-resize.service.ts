@@ -49,7 +49,10 @@ export class BaseResizeService {
   public reset(element: Element, options?: ResizeObserverOptions) {
     if (!this.elements.has(element)) {
       if (isDevMode()) {
-        console.warn('Attempting to reset an element that was not observed. Use the observe method instead.', element);
+        console.warn(
+          'Attempting to reset an element that was not observed. Use the observe method instead. id:',
+          element.id
+        );
       }
       return;
     }
