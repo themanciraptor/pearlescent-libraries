@@ -73,11 +73,8 @@ export class CarouselComponent {
 
   private intervalId?: number;
   private skipNumber = 0;
-  private readonly id = Math.random().toString(36).slice(2);
 
   constructor(destroyRef: DestroyRef) {
-    this._hostEl.nativeElement.id = this.id;
-
     afterNextRender(() => {
       this.intervalId = window.setInterval(() => this.galleryLoop(), this.delay());
     });
