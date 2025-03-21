@@ -52,27 +52,32 @@ function debounce<T>(callback: (...args: T[]) => void, debounceTime: number): (.
 export class CarouselComponent {
   private readonly _hostEl: ElementRef<HTMLElement> = inject(ElementRef);
   private readonly panes = contentChildren(CarouselPaneDirective);
-  public readonly config = input<Config>({
-    direction: 'horizontal',
-    delay: 4000,
-  });
-  private readonly direction = computed(() => this.config().direction);
-  public readonly activePaneIndex = signal(0);
   private readonly parentController = inject(CarouselComponent, {
     optional: true,
     skipSelf: true,
   });
-  public readonly forceHaltProgression = input(false);
+
   private readonly _systemHaltProgression = signal(false);
   private readonly isVisible = inject(IsVisibleDirective).isVisible;
+  private readonly direction = computed(() => this.config().direction);
   private readonly isHalted = computed(
     () => this._systemHaltProgression() || this.forceHaltProgression() || !this.isVisible()
   );
-  public readonly delay = computed(() => this.config().delay);
-  protected readonly debouncedIndexUpdate = debounce(() => this._updatePaneIndex(), 100);
 
   private intervalId?: number;
   private skipNumber = 0;
+
+  protected readonly debouncedIndexUpdate = debounce(() => this._updatePaneIndex(), 100);
+
+  public readonly delay = computed(() => this.config().delay);
+  public readonly activePaneIndex = signal(0);
+  public readonly length = computed(() => this.panes().length);
+
+  public readonly forceHaltProgression = input(false);
+  public readonly config = input<Config>({
+    direction: 'horizontal',
+    delay: 4000,
+  });
 
   constructor(destroyRef: DestroyRef) {
     afterNextRender(() => {
