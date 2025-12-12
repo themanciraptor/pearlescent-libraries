@@ -32,4 +32,4 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## Running storybooks in supported projects
 
-`npx ng run ${project}:storybooks
+`npx ng run ${project}:storybook`
