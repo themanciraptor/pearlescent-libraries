@@ -1,7 +1,7 @@
 import { DestroyRef, Directive, ElementRef, inject, signal } from '@angular/core';
 import { VisibilityService } from './visibility.service';
 
-@Directive({ selector: '[plsIsVisible]', standalone: true })
+@Directive({ selector: '[plsIsVisible]', standalone: true, exportAs: 'plsIsVisible' })
 export class IsVisibleDirective {
   private readonly _isVisible = signal(false);
   public readonly isVisible = this._isVisible.asReadonly();
