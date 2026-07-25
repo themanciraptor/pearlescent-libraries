@@ -10,6 +10,7 @@ import {
   inject,
   input,
   signal,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { CarouselPaneDirective } from './carousel-pane.directive';
 import { IsVisibleDirective } from '@pearlescent/visibility';
@@ -44,6 +45,7 @@ function debounce<T>(callback: (...args: T[]) => void, debounceTime: number): (.
   styleUrl: './carousel.component.scss',
   standalone: true,
   hostDirectives: [IsVisibleDirective],
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     '(scroll)': 'debouncedIndexUpdate()',
     '[class.horizontal]': 'config().direction === "horizontal"',
